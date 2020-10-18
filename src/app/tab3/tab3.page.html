@@ -7,11 +7,91 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <body>
+    <div class="container">
+      <div class="col-md-6 mx-auto text-center">
+        <div class="header-title">
+          <h2 class="wv-heading--subtitle">
+            Cadastre-se Aqui<!--Subtitulo aqui-->
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mx-auto">
+          <div class="myform form">
+            <form action="" method="post" name="login">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="nome"
+                  class="form-control my-input"
+                  id="nome"
+                  placeholder="Nome"
+                  [(ngModel)] ="Name"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control my-input"
+                  id="email"
+                  placeholder="Email"
+                  [(ngModel)]="Email"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="senha"
+                  name="senha"
+                  class="form-control my-input"
+                  id="senha"
+                  placeholder="Senha"
+                  [(ngModel)]="Password"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="number"
+                  min="0"
+                  name="fone"
+                  id="fone"
+                  class="form-control my-input"
+                  placeholder="Telefone"
+                  [(ngModel)]="Tel"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="cpf"
+                  name="cpf"
+                  id="cpf"
+                  class="form-control my-input"
+                  placeholder="CPF"
+                  [(ngModel)]="CPF"
+                />
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-block send-button tx-tfm" (click)="createAccount()">
+                  Crie Sua Conta
+                </button>
+              </div>
+              <div class="login-or">
+                <hr class="hr-or" />
+                <span class="span-or"></span>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-block send-button tx-tfm">
+                  Voltar
+                </button>
+              </div>
+              <div class="col-md-12"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  
 </ion-content>

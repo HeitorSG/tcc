@@ -7,11 +7,66 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <body>
+    <div class="container">
+            </div> 
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+            <div class="bs-calltoaction bs-calltoaction-primary">
+                <div class="row">
+                    <div class="col-md-9 cta-contents">
+                        <h1 class="cta-title">Realizar uma chamada de Vídeo</h1>
+                        <div class="cta-desc">
+                            <p>Inicie uma conversa de audio e vídeo com um de seus aparelhos cadastrados</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 cta-button">
+                        <a href="#" class="btn btn-lg btn-block btn-primary">Realizar Chamada</a>
+                    </div>
+                 </div>
+            </div>
+
+            <div class="bs-calltoaction bs-calltoaction-info">
+                <div class="row">
+                    <div class="col-md-9 cta-contents">
+                        <h1 class="cta-title">Chamada de Audio</h1>
+                        <div class="cta-desc">
+                            <p>Inicie uma conversa de audio com um de seus aparelhos cadastrados</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 cta-button">
+                        <a href="#" class="btn btn-lg btn-block btn-info">Realizar Chamada</a>
+                    </div>
+                 </div>
+            </div>
+
+            <div class="bs-calltoaction bs-calltoaction-success">
+                <div class="row">
+                    <div class="col-md-9 cta-contents">
+                        <h1 class="cta-title">Localização</h1>
+                        <div class="cta-desc">
+                            <p>Localize em tempo real um de seus aparelhos cadastrados</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 cta-button">
+                        <a (click)="goTo('tabs/tab4')" class="btn btn-lg btn-block btn-success">Localização GPS</a>
+                    </div>
+                 </div>
+            </div>
+
+            <div class="bs-calltoaction bs-calltoaction-warning">
+                <div class="row">
+                    <div class="col-md-9 cta-contents">
+                        <h1 class="cta-title">Sair</h1>
+                        <div class="cta-desc">
+                            <p>Encerra sua sessão atual</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 cta-button">
+                        <a href="login.html" class="btn btn-lg btn-block btn-warning">Sair</a>
+                    </div>
+                 </div>
+            </div>
+
+    
+</body>
 </ion-content>
