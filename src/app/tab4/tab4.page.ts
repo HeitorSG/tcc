@@ -14,6 +14,10 @@ export class Tab4Page implements OnInit {
   map:any;
   layers:any;
   marker:any;
+  vectors:any;
+  clayer:any;
+  circle:any;
+  circlegeo:any
   constructor() { }
 
   ngOnInit() {
@@ -54,5 +58,17 @@ export class Tab4Page implements OnInit {
    this.marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-49.75374415,-21.6756695])))
    this.layers.getSource().addFeature(this.marker);
 
+  
+    this.vectors = new ol.source.Vector();
+    this.clayer = new ol.layer.Vector({
+      source: this.vectors
+    });
+    this.map.addLayer(this.clayer);
+    this.circle = new ol.geom.Circle(ol.proj.fromLonLat([-49.75374415,-21.6756695]), 20);
+    console.log(this.circle.getCenter());
+    this.vectors.addFeature(new ol.Feature(this.circle));
+    console.log(this.circle.intersectsCoordinate(ol.proj.fromLonLat([-49.75374415,-21.6756695])));
   }
+
+  
 }
