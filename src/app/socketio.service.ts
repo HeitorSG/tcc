@@ -25,6 +25,11 @@ export class SocketioService {
 
 
   }
+  checkCad(router){
+    this.socket.on('created', () => {
+      router.navigate(['tabs/tab1']);
+    })
+  }
 
   checkLogin(router){
     this.socket.on('valid', (data)=> {
@@ -41,6 +46,16 @@ export class SocketioService {
       alert('Wrong Email or Password');
     });
 
+  }
+
+  cadastrarUser(Name, Email, Password, Tel, CPF){
+    this.socket.emit('cadastro_user',{
+      Name:Name,
+      Email:Email,
+      Password:Password,
+      Tel:Tel,
+      CPF:CPF
+    })
   }
 
   loginSocket(Email, Password){

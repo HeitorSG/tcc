@@ -3,6 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { observable } from 'rxjs';
 import {LocalStorageService} from '../local-storage.service';
+import { SocketioService } from '../socketio.service';
 import { Local } from 'protractor/built/driverProviders';
 
 const httpOptions = {
@@ -24,19 +25,11 @@ export class Tab3Page {
   Tel:string = "";
   CPF:string = "";
 
-  constructor(private http:HttpClient,private router:Router,storage:LocalStorageService) {}
+  constructor(private http:HttpClient,private router:Router,private storage:LocalStorageService, private socketservice:SocketioService) {}
 
-  createAccount = function(){
-    var body = JSON.stringify({
-      Name:this.Name,
-      Email:this.Email,
-      Password:this.Password,
-      Tel:this.Tel,
-      CPF:this.CPF
-    });
-    this.http.post('http://localhost:3000/cadastro', body, httpOptions).subscribe(data =>{
-      console.log(data);
-    })
+  createAccount(){
+    this.socketservice.cadastrarUser(this.Name,this.Email,this.Password,this.Tel,this.CPF);
+    this.socketservice.checkCad(this.router);
   }
   
 

@@ -3,6 +3,8 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { observable } from 'rxjs';
 import { SocketioService } from '../socketio.service';
+import {LocalStorageService} from '../local-storage.service';
+import { GlobalConstants } from 'src/common/global-constants';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,11 +21,15 @@ const httpOptions = {
 export class Tab1Page implements OnInit{
   Username:string = "";
   Password:string = "";
+  userdata:any = "";
 
-  constructor(private http:HttpClient,private router:Router, private socketService:SocketioService) {}
+  constructor(private http:HttpClient,private router:Router, private socketService:SocketioService, private storage:LocalStorageService) {}
 
   ngOnInit(){
     console.log('inicio');
+    this.storage.get('user',this.userdata);
+    console.log(GlobalConstants.user);
+
   };
 
   printUser(){
@@ -36,7 +42,7 @@ export class Tab1Page implements OnInit{
   };
 
   
-  Login = function(){
+  Login(){
     console.log("FOI");
     this.socketService.loginSocket(this.Username, this.Password);
     this.socketService.checkLogin(this.router);
