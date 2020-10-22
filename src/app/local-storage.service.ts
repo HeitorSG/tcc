@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import {GlobalConstants} from '../common/global-constants';
 import { BehaviorSubject, observable } from 'rxjs';
+import { SocketioService } from './socketio.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
-  userinfo:BehaviorSubject<any> = new BehaviorSubject<any>(0);
-  constructor(public storage:StorageMap) { }
+  constructor(public storage:StorageMap,private socket:SocketioService) { }
 
   set(index, data){
     this.storage.set(index, data).subscribe(() => {
@@ -16,12 +16,12 @@ export class LocalStorageService {
     });
   }
 
-  get(index, data){
-    this.storage.get(index).subscribe((userinfo:BehaviorSubject<any>) => {
-      this.userinfo = userinfo;
-      console.log(this.userinfo);
+  getMap(index){
+    this.storage.get(index).subscribe((getData) => {
+      console.log(getData);
+      this.socket.mapInit(getData);
     });
-    console.log(this.userinfo);
+  
   }
 
   clear(){

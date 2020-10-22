@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AlertService } from 'ngx-alerts';
 import * as io from 'socket.io-client';
+import { GlobalConstants } from 'src/common/global-constants';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -23,12 +25,28 @@ export class SocketioService {
       alert("Username / Password Invalid, Please try again!");
     });
 
-
+  
   }
   checkCad(router){
     this.socket.on('created', () => {
       router.navigate(['tabs/tab1']);
     })
+  }
+  
+  checkMap(){
+    this.socket.on('device_return', (data) =>{
+      console.log(data);
+      GlobalConstants.deviceid = data.id;
+      GlobalConstants.devicename = data.name;
+      console.log(GlobalConstants.deviceid);
+    })
+  }
+
+  mapInit(data){
+    console.log(data);
+    this.socket.emit('map_connection',{
+      id: data.id,
+    });
   }
 
   checkLogin(router){
@@ -43,7 +61,8 @@ export class SocketioService {
     });
     
     this.socket.on('invalid', socket => {
-      alert('Wrong Email or Password');
+      console.log("conta errada");
+      window.alert('Wrong Email or Password!');
     });
 
   }

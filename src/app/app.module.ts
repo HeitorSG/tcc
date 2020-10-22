@@ -14,10 +14,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { SocketioService } from './socketio.service';
 import {LocalStorageService} from './local-storage.service';
 
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { AlertModule } from 'ngx-alerts';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
+  imports: [BrowserModule,BrowserAnimationsModule,AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}), IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [
     LocalStorageService,
     SocketioService,

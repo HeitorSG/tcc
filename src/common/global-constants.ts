@@ -1,3 +1,4 @@
 export class GlobalConstants {
-    public static user: any;
+    public static deviceid: any;
+    public static devicename:any;
 }
