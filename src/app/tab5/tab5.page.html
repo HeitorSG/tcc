@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tab5</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [id]="localCallId" class="local"></div>
+
+  <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
+  
+</ion-content>

@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^10.2.7",
     "@angular/cli": "^10.1.7",
     "@angular/common": "~10.0.0",
     "@angular/core": "~10.0.0",
@@ -28,8 +29,10 @@
     "@ionic/pwa-elements": "^3.0.1",
     "@ngx-pwa/local-storage": "^10.1.0",
     "@types/request": "^2.48.5",
+    "agora-rtc-sdk": "3.0.2",
     "bootstrap": "^4.5.3",
     "jquery": "^3.5.1",
+    "ngx-agora": "^2.0.1",
     "request": "^2.88.2",
     "rxjs": "~6.5.5",
     "socket.io-client": "^2.3.1",
