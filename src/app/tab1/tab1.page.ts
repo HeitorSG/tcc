@@ -5,7 +5,6 @@ import { observable } from 'rxjs';
 import { SocketioService } from '../socketio.service';
 import {LocalStorageService} from '../local-storage.service';
 import { GlobalConstants } from 'src/common/global-constants';
-import { AlertService } from 'ngx-alerts';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,7 +23,7 @@ export class Tab1Page implements OnInit{
   Password:string = "";
   userdata:any = "";
 
-  constructor(private http:HttpClient,private router:Router, private socketService:SocketioService, private storage:LocalStorageService, private alert:AlertService) {}
+  constructor(private http:HttpClient,private router:Router, private socketService:SocketioService, private storage:LocalStorageService) {}
 
   ngOnInit(){
     console.log('inicio');

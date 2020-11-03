@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AlertService } from 'ngx-alerts';
 import * as io from 'socket.io-client';
 import { GlobalConstants } from 'src/common/global-constants';
 import { environment } from 'src/environments/environment';
