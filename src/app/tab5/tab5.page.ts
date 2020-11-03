@@ -9,9 +9,11 @@ import { inject } from '@angular/core/testing';
 })
 export class Tab5Page implements OnInit,AfterViewInit {
   @ViewChild('vctrl') myview: ElementRef;
+  @ViewChild('actrl') aview: ElementRef;
   remoteCalls: string[] = [];
   localCallId = 'agora_local';
   icon: string = "<div style='height:50px; width:50px;'><ion-icon name='videocam-outline' id='videoon' style='height:100%; width:100%;'></ion-icon></div>";
+  icona: string = "<ion-icon name='mic-outline' id='audioon' style='height:100%; width:100%;'></ion-icon>";
   private client: AgoraClient;
   private localStream: Stream;
   private uid:number;
@@ -20,6 +22,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
    }
 
    ngAfterViewInit(){
+    this.aview.nativeElement.innerHTML = this.icona;
     this.myview.nativeElement.innerHTML = this.icon;
     console.log("this view:", this.myview.nativeElement.innerHTML);
    }
@@ -139,8 +142,16 @@ export class Tab5Page implements OnInit,AfterViewInit {
     
   }
 
-  private playVideo(){
-    this.localStream.muteVideo();
+  private ctrlAudio(){
+    if(this.aview.nativeElement.innerHTML.indexOf('audioon') != -1){
+      this.aview.nativeElement.innerHTML = "<ion-icon name='mic-off-outline' id='audiooff' style='height:100%; width:100%;'></ion-icon>";
+      this.localStream.muteAudio();
+    }
+    else if(this.aview.nativeElement.innerHTML.indexOf('audiooff') != -1){
+      this.aview.nativeElement.innerHTML = "<ion-icon name='mic-outline' id='audioon' style='height:100%; width:100%;'></ion-icon>";
+      this.localStream.unmuteAudio();
+    }
+    
   }
 
  
