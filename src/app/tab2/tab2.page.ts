@@ -13,14 +13,14 @@ import {LocalStorageService} from '../local-storage.service';
 export class Tab2Page implements OnInit{
   param;
   constructor(public activatedRoute: ActivatedRoute, private storage:LocalStorageService, private router:Router) {}
-  userData:any = "";
+  
   ngOnInit(){
     if(window.history.state.navigationId == 2){
       this.param = window.history.state;
       this.storage.set('user',this.param);
-      this.storage.get('user', this.userData);
+    
     }
-    this.storage.get('user', this.userData);
+
   }
   
   goTo(url){

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NetworkPluginWeb } from '@capacitor/core';
+import {LocalStorageService} from '../local-storage.service';
+import { SocketioService } from '../socketio.service';
+
 declare var ol: any;
 
 @Component({
@@ -18,7 +21,7 @@ export class Tab4Page implements OnInit {
   clayer:any;
   circle:any;
   circlegeo:any
-  constructor() { }
+  constructor(private storage:LocalStorageService, private socket:SocketioService) { }
 
   ngOnInit() {
     this.map = new ol.Map({
@@ -55,20 +58,22 @@ export class Tab4Page implements OnInit {
   }
 
   addMarker(){
-   this.marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-49.75374415,-21.6756695])))
-   this.layers.getSource().addFeature(this.marker);
+    this.storage.getMap('user');
+    this.socket.checkMap();  
+    this.marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-49.75374415,-21.6756695])))
+    this.layers.getSource().addFeature(this.marker);
 
-  
-    this.vectors = new ol.source.Vector();
-    this.clayer = new ol.layer.Vector({
-      source: this.vectors
-    });
-    this.map.addLayer(this.clayer);
-    this.circle = new ol.geom.Circle(ol.proj.fromLonLat([-49.75374415,-21.6756695]), 20);
-    console.log(this.circle.getCenter());
-    this.vectors.addFeature(new ol.Feature(this.circle));
-    console.log(this.circle.intersectsCoordinate(ol.proj.fromLonLat([-49.75374415,-21.6756695])));
-  }
+    
+      this.vectors = new ol.source.Vector();
+      this.clayer = new ol.layer.Vector({
+        source: this.vectors
+      });
+      this.map.addLayer(this.clayer);
+      this.circle = new ol.geom.Circle(ol.proj.fromLonLat([-49.75374415,-21.6756695]), 40);
+      console.log(this.circle.getCenter());
+      this.vectors.addFeature(new ol.Feature(this.circle));
+      console.log(this.circle.intersectsCoordinate(ol.proj.fromLonLat([-49.75374415,-21.6756695])));
+    }
 
   
 }

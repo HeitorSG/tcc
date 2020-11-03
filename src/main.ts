@@ -3,6 +3,11 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import {Capacitor} from '@capacitor/core';
+
+// Call the element loader after the platform has been bootstrapped
+defineCustomElements(window);
 
 if (environment.production) {
   enableProdMode();

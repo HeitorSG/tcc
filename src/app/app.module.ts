@@ -19,6 +19,7 @@ const agoraConfig = {
   AppID: 'af7cf4e1dc8e4c1597497b3bbcead4c0'
 }
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
