@@ -5,7 +5,11 @@
 </ion-header>
 
 <ion-content>
-  <div [id]="localCallId" class="local"></div>
+  <div [id]="localCallId" class="local">
+  </div>
+  <div #vctrl (click)='ctrlVideo();' class='videocontrol'>
+  </div>
+
 
   <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
   

@@ -1,20 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent} from 'ngx-agora';
+import { inject } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tab5',
   templateUrl: './tab5.page.html',
   styleUrls: ['./tab5.page.scss'],
 })
-export class Tab5Page implements OnInit {
+export class Tab5Page implements OnInit,AfterViewInit {
+  @ViewChild('vctrl') myview: ElementRef;
   remoteCalls: string[] = [];
   localCallId = 'agora_local';
-
+  icon: string = "<div style='height:50px; width:50px;'><ion-icon name='videocam-outline' id='videoon' style='height:100%; width:100%;'></ion-icon></div>";
   private client: AgoraClient;
   private localStream: Stream;
   private uid:number;
   constructor(private ngxAgoraService:NgxAgoraService) {
     this.uid = Math.floor(Math.random() * 100);
+   }
+
+   ngAfterViewInit(){
+    this.myview.nativeElement.innerHTML = this.icon;
+    console.log("this view:", this.myview.nativeElement.innerHTML);
    }
 
   ngOnInit() {
@@ -42,6 +49,7 @@ export class Tab5Page implements OnInit {
     this.localStream.on(StreamEvent.MediaAccessDenied, () => {
       console.log('access denied');
     });
+
   }
 
   private initLocalStream(onSuccess?: () => any){
@@ -105,10 +113,34 @@ export class Tab5Page implements OnInit {
         console.log(`${evt.uid} left from this channel`);
       }
     });
+
+    this.client.on(ClientEvent.RemoveVideoMuted, evt => {
+      console.log("muted");
+      var html = document.getElementById('vctrl');
+      html.append("<div id='vctrl' (click)='playVideo()' class='videocontrol'><ion-icon name='videocam-off-outline' style='height:100%; width:100%;'></ion-icon></div>");
+    });
   }
 
   private getRemoteId(stream: Stream): string {
     return `agora_remote-${stream.getId()}`;
+  }
+
+  private ctrlVideo(){
+    if(this.myview.nativeElement.innerHTML.indexOf('videoon') != -1){
+      this.myview.nativeElement.innerHTML = "<div style='height:50px; width:50px;'><ion-icon name='videocam-off-outline' id='videooff' style='height:100%; width:100%;'></ion-icon></div>"
+      this.localStream.muteVideo();
+    }
+    else if(this.myview.nativeElement.innerHTML.indexOf('videooff') != -1){
+      this.myview.nativeElement.innerHTML = "<div style='height:50px; width:50px;'><ion-icon name='videocam-outline' id='videoon' style='height:100%; width:100%;'></ion-icon></div>"
+      this.localStream.unmuteVideo();
+    }
+   // var html = document.getElementById('vctrl').innerHTML;
+    //html = "<div id='vctrl' (click)='playVideo()' class='videocontrol'><ion-icon name='videocam-off-outline' style='height:100%; width:100%;'></ion-icon></div>";
+    
+  }
+
+  private playVideo(){
+    this.localStream.muteVideo();
   }
 
  
