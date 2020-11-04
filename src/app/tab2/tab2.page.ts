@@ -8,6 +8,7 @@ import {LocalStorageService} from '../local-storage.service';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
+  //mudança aqui teste
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit{
