@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import {GlobalConstants} from '../common/global-constants';
-import { BehaviorSubject, observable } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { SocketioService } from './socketio.service';
 
 @Injectable({
@@ -16,12 +16,16 @@ export class LocalStorageService {
     });
   }
 
-  getMap(index){
+  getMap(index): Observable<any>{
+    const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
     this.storage.get(index).subscribe((getData) => {
       console.log(getData);
-      this.socket.mapInit(getData);
+      
+      //this.socket.mapInit(getData);
+      result.next(getData);
+      result.complete();
     });
-  
+    return result.asObservable();
   }
 
   clear(){
