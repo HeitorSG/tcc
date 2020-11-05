@@ -37,7 +37,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
   }
 
   join(onSuccess?: (uid:number | string) => void, onFailure?: (error:Error) => void){
-    this.client.join('006af7cf4e1dc8e4c1597497b3bbcead4c0IABE4mInWTxgfH83nNGh2dGHy9x+QKoqdP5t/YNRijQi/unZLEwAAAAAEABO10qJhgSkXwEAAQC0BqRf','foo-bar', this.uid, onSuccess, onFailure);
+    this.client.join('006af7cf4e1dc8e4c1597497b3bbcead4c0IAA0vMAcKrRyejVzvKY29YrXFttWjCyXBUQ2e9D4NQx/bOnZLEwAAAAAEABJgS3VfralXwEAAQCAtqVf','foo-bar', this.uid, onSuccess, onFailure);
   }s
 
   publish(){
