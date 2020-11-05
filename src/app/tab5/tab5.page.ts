@@ -31,7 +31,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
     this.client = this.ngxAgoraService.createClient({mode:'rtc', codec:'h264'});
     this.assignClientHandler();
 
-    this.localStream = this.ngxAgoraService.createStream({streamID: this.uid, audio:false, video:true, screen: false});
+    this.localStream = this.ngxAgoraService.createStream({streamID: this.uid, audio:true, video:true, screen: false});
     this.assignLocalStreamHandlers();
     this.initLocalStream(() => this.join(uid => this.publish(), error => console.error(error)));
   }
@@ -85,7 +85,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
 
     this.client.on(ClientEvent.RemoteStreamAdded, evt => {
       const stream = evt.stream as Stream;
-      this.client.subscribe(stream, {audio: false, video:true}, err => {
+      this.client.subscribe(stream, {audio: true, video:true}, err => {
         console.log('sub stream failed');
       });
     });
