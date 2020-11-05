@@ -1,20 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tab5</ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content>
-  <div [id]="localCallId" class="local">
-  </div>
-  <div #vctrl (click)='ctrlVideo()' class='videocontrol'>
-  </div>
-  
-  <div #actrl (click)='ctrlAudio()' class='audiocontrol'>
+    <div [id]="localCallId" class="local">
+    </div>
+
     
-  </div>
 
+  
+    <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
 
-  <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
+    <div #vctrl (click)='ctrlVideo()' class="videocontrol">
+    </div>
+    
+    <div #actrl (click)='ctrlAudio()' class="audiocontrol">
+      
+    </div>
   
 </ion-content>
+
