@@ -15,6 +15,8 @@ import { SocketioService } from './socketio.service';
 import {LocalStorageService} from './local-storage.service';
 import {NgxAgoraModule} from 'ngx-agora';
 import { environment } from 'src/environments/environment';
+import {SocketIoModule,SocketIoConfig} from 'ngx-socket-io';
+const socketconfig: SocketIoConfig = {url:'https://servertcc.loca.lt/', options:{}}
 const agoraConfig = {
   AppID: 'af7cf4e1dc8e4c1597497b3bbcead4c0'
 }
@@ -23,7 +25,7 @@ const agoraConfig = {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,NgxAgoraModule.forRoot(agoraConfig)],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,NgxAgoraModule.forRoot(agoraConfig),SocketIoModule.forRoot(socketconfig)],
   providers: [
     LocalStorageService,
     SocketioService,
