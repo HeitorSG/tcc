@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SocketioService } from '../socketio.service';
 import {LocalStorageService} from '../local-storage.service';
 import { GlobalConstants } from 'src/common/global-constants';
@@ -25,9 +25,23 @@ export class Tab1Page implements OnInit{
 
   constructor(private http:HttpClient,private router:Router, private socketService:SocketioService, private storage:LocalStorageService) {}
 
-  ngOnInit(){
+  async ngOnInit(){
     console.log('inicio');
-
+    var user ={
+      email: 'teste',
+      password: 'storage'
+    }
+    var user2;
+    var teste;
+    this.storage.set('user', user);
+    user2 = this.storage.getMap('user');
+    user2.subscribe({
+      next:(res) => {
+        if(res != 0){
+          return res;
+        }
+      }
+    });
   };
 
   printUser(){

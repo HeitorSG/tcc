@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client';
+import {Socket} from 'ngx-socket-io';
 import { GlobalConstants } from 'src/common/global-constants';
 import { environment } from 'src/environments/environment';
 
@@ -7,9 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SocketioService {
-  socket;
 
-  constructor() { }
+  constructor(private socket:Socket) { }
 
   setupSocketConnection(){
     var options = {
@@ -18,7 +17,7 @@ export class SocketioService {
       secure:true, 
       rejectUnauthorized: false
           }
-    this.socket = io(environment.SOCKET_ENDPOINT);
+    
 
     this.socket.on('', socket =>{
       alert("Username / Password Invalid, Please try again!");
