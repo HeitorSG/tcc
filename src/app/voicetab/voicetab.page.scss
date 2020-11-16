@@ -1,0 +1,84 @@
+.caption div {
+    box-shadow: 0 0 5px #C8C8C8;
+    transition: all 0.3s ease 0s;
+}
+
+
+.img-circle {
+    border-radius: 50%;
+}
+.img-circle {
+    border-radius: 0;
+}
+
+.ratio {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.margin{
+    padding-top: 20px;
+}
+
+.ratio-inside {
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 10;
+    padding-bottom: 10%;
+    padding-top: 10%;
+    width: 74%;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+.img-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+.img-fit{
+    display: block;
+    height: auto;
+    max-height: 100%;
+}
+
+
+
+.primary-button {
+    margin-top: 6.4rem;
+
+    width:100%;
+    height: 6.4rem;
+    border: 0;
+    cursor: pointer;
+    background: #942c1a;
+    border-radius: 2rem;
+    color: white;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s;
+}
+
+.primary-button:hover {
+    background: red ;
+}
+
+.primary-button > img{ /* pega TODAS as img dentro da box com classe orphanage details caso não esteja com o ">"*/
+    width: 100%;
+    height: 4rem;
+    object-fit: contain
+
+}
+
+
+
