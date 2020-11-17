@@ -11,13 +11,6 @@ export class SocketioService {
   constructor(private socket:Socket) { }
 
   setupSocketConnection(){
-    var options = {
-      rememberUpgrade:true,
-      transports: ['websocket'],
-      secure:true, 
-      rejectUnauthorized: false
-          }
-    
 
     this.socket.on('', socket =>{
       alert("Username / Password Invalid, Please try again!");
