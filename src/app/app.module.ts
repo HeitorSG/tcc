@@ -16,7 +16,6 @@ import {LocalStorageService} from './local-storage.service';
 import {NgxAgoraModule} from 'ngx-agora';
 import { environment } from 'src/environments/environment';
 import {SocketIoModule,SocketIoConfig} from 'ngx-socket-io';
-import * as faceapi from 'face-api.js';
 
 const socketconfig: SocketIoConfig = {url:'https://servertcc.loca.lt/', options:{ rememberUpgrade:true,
 transports: ['websocket'],
