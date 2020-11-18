@@ -20,7 +20,25 @@ export class Tab4Page implements OnInit {
   vectors:any;
   clayer:any;
   circle:any;
-  circlegeo:any
+  circlegeo:any;
+  arrayteste = [{
+    devicename:'device1',
+    ownername:'heitor',
+    
+  },
+  {
+    devicename:'device2',
+    ownername:'heitor',
+  },
+  {
+    devicename:'device3',
+    ownername:'heitor',
+  },
+  {
+    devicename:'device4',
+    ownername:'heitor',
+  }
+];
   constructor(private storage:LocalStorageService, private socket:SocketioService) { }
 
   ngOnInit() {

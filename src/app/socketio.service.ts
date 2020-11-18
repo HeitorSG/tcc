@@ -20,7 +20,7 @@ export class SocketioService {
   }
   checkCad(router){
     this.socket.on('created', () => {
-      router.navigate(['tabs/tab1']);
+      router.navigate(['tab1']);
     })
   }
   
@@ -42,7 +42,7 @@ export class SocketioService {
 
   checkLogin(router){
     this.socket.on('valid', (data)=> {
-      router.navigate(['tabs/tab2'],{state:{
+      router.navigate(['tab2'],{state:{
         id:data.id,
         name:data.name,
         email:data.email,

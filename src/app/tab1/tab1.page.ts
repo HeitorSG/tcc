@@ -54,7 +54,7 @@ export class Tab1Page implements OnInit{
   };
 
   goToCad(){
-    this.router.navigate(['tabs/tab3']);
+    this.router.navigate(['tab3']);
   }
 
   Login(){

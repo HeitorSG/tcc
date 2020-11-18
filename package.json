@@ -30,6 +30,7 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/pwa-elements": "^3.0.1",
     "@ngx-pwa/local-storage": "^10.1.0",
+    "@swimlane/ngx-datatable": "^18.0.0",
     "@types/request": "^2.48.5",
     "agora-rtc-sdk": "3.0.2",
     "bootstrap": "^4.5.3",

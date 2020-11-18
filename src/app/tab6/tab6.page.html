@@ -1,6 +1,3 @@
-
-<body style="overflow-y: clip;">
-<div id="map" class="map positionmap"></div>
 <ion-header>
   <ion-toolbar>
     <ion-title><ion-grid size="5">
@@ -16,8 +13,8 @@
   </ion-toolbar>
 </ion-header>
 
-
-  <ion-grid size="5" style="overflow-y:scroll; max-height:20vh;">
+<ion-content>
+  <ion-grid size="5" >
     <ion-list *ngFor="let device of arrayteste">
         <ion-item lines="full">
           <ion-col >
@@ -50,4 +47,6 @@
         </ion-item>
   </ion-list>
 </ion-grid>
-</body>
+
+  <!--<ngx-datatable [rows]="arrayteste" [columns]="columns"></ngx-datatable>-->
+</ion-content>

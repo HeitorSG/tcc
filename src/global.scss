@@ -25,6 +25,9 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
 
 :root {
     --ion-color-tcc: #17a2b8;
@@ -44,3 +47,13 @@
     --ion-color-tint: var(--ion-color-tcc-tint);
   }
   
+
+.my-custom-class .action-sheet-destructive{
+  --color:#eb445a;
+  --button-color:#eb445a;
+}
+
+.my-custom-class .action-sheet-group-cancel{
+  --color:#148fa2;
+  --button-color:#148fa2;
+}
