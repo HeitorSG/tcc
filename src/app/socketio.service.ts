@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import { GlobalConstants } from 'src/common/global-constants';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +19,27 @@ export class SocketioService {
 
   
   }
+
   checkCad(router){
     this.socket.on('created', () => {
       router.navigate(['tab1']);
     })
   }
   
-  checkMap(){
+  checkDevice():Observable<any>{
+    const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
     this.socket.on('device_return', (data) =>{
       console.log(data);
-      GlobalConstants.deviceid = data.id;
-      GlobalConstants.devicename = data.name;
-      console.log(GlobalConstants.deviceid);
-    })
+      result.next(data);
+      result.complete();
+    });
+    return result.asObservable();
+  }
+
+  getDevices(OwnerID){
+    this.socket.emit('get_devices',{
+      ownerid: OwnerID
+    });
   }
 
   mapInit(data){
@@ -56,6 +65,15 @@ export class SocketioService {
       window.alert('Wrong Email or Password!');
     });
 
+  }
+
+  cadastrarDevice(Name, Ownername, Ownerid){
+    this.socket.emit('cadastro_device',
+    {
+      Name:Name,
+      OwnerName:Ownername,
+      OwnerID:Ownerid
+    });
   }
 
   cadastrarUser(Name, Email, Password, Tel, CPF){

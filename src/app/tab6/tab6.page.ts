@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import { ActionSheetController, mdTransitionAnimation } from '@ionic/angular';
-import { Router,ActivatedRoute} from '@angular/router';
-
+import { ActionSheetController, mdTransitionAnimation, AlertController} from '@ionic/angular';
+import { Router} from '@angular/router';
+import {SocketioService} from '../socketio.service';
+import {LocalStorageService} from '../local-storage.service';
 
 @Component({
   selector: 'app-tab6',
@@ -10,24 +10,55 @@ import { Router,ActivatedRoute} from '@angular/router';
   styleUrls: ['./tab6.page.scss'],
 })
 export class Tab6Page implements OnInit {
-  columns = [{ prop: 'Device' }, { name: 'Owner' }, { name: 'Company' }];
-  arrayteste = [{
-    devicename:'device1',
-    ownername:'heitor',
-    
-  },
-  {
-    devicename:'device2',
-    ownername:'heitor',
-  },
-  {
-    devicename:'device3',
-    ownername:'heitor',
-  }
-];
-  constructor(public actionSheetController:ActionSheetController, public router:Router, public activatedRoute: ActivatedRoute) { }
+  devices:[];
+  constructor(private actionSheetController:ActionSheetController, private router:Router, private alertController:AlertController, private socket:SocketioService, private storage:LocalStorageService) { }
 
   ngOnInit() {
+      this.storage.get('user').subscribe( (data) => {
+        console.log(data.id);
+        this.socket.getDevices(data.id); 
+      });
+      this.socket.checkDevice().subscribe({
+        next:(res) => {
+          if(res != 0){
+            this.devices = res;
+            console.log(this.devices);
+          }
+        }
+      });
+      
+   
+  }
+
+  async presentAlert(){
+    const alert = await this.alertController.create({
+      cssClass:'customAlert',
+      header:'Add Device',
+      inputs:[{
+        name:'DeviceName',
+        type:'text',
+        placeholder:'Device Name'
+      }],
+      buttons:[
+        {
+          text:'Cancel',
+          role:'cancel',
+          handler:() => {
+            console.log("confirm cancel");
+          }
+        },
+        {
+          text:'okay',
+          handler:(data) => {
+            this.storage.get('user').subscribe((datastg) => {
+              this.socket.cadastrarDevice(data.DeviceName, datastg.name, datastg.id);
+            });
+           setTimeout(() => {window.location.reload();},300);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async presentActionSheet() {

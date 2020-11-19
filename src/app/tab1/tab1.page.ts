@@ -34,7 +34,7 @@ export class Tab1Page implements OnInit{
     var user2;
     var teste;
     this.storage.set('user', user);
-    user2 = this.storage.getMap('user');
+    user2 = this.storage.get('user');
     user2.subscribe({
       next:(res) => {
         if(res != 0){

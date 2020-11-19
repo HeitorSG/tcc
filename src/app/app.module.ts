@@ -16,9 +16,9 @@ import {LocalStorageService} from './local-storage.service';
 import {NgxAgoraModule} from 'ngx-agora';
 import { environment } from 'src/environments/environment';
 import {SocketIoModule,SocketIoConfig} from 'ngx-socket-io';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
-const socketconfig: SocketIoConfig = {url:'https://servertcc.loca.lt/', options:{ rememberUpgrade:true,
+
+const socketconfig: SocketIoConfig = {url:'http://localhost:3000', options:{ rememberUpgrade:true,
 transports: ['websocket'],
 secure:true, 
 rejectUnauthorized: false}}
@@ -30,7 +30,7 @@ const agoraConfig = {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, NgxDatatableModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgxAgoraModule.forRoot(agoraConfig), SocketIoModule.forRoot(socketconfig)],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgxAgoraModule.forRoot(agoraConfig), SocketIoModule.forRoot(socketconfig)],
   providers: [
     LocalStorageService,
     SocketioService,

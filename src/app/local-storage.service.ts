@@ -16,7 +16,7 @@ export class LocalStorageService {
     });
   }
 
-  getMap(index): Observable<any>{
+  get(index): Observable<any>{
     const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
     this.storage.get(index).subscribe((getData) => {
       console.log(getData);

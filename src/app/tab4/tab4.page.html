@@ -17,14 +17,14 @@
 </ion-header>
 
 
-  <ion-grid size="5" style="overflow-y:scroll; max-height:20vh;">
-    <ion-list *ngFor="let device of arrayteste">
+  <ion-grid size="5" style="overflow-y:scroll; max-height:24vh;">
+    <ion-list *ngFor="let device of devices">
         <ion-item lines="full">
           <ion-col >
             <ion-icon name="hardware-chip-outline"></ion-icon>
           </ion-col>
           <ion-col pull="0.9">
-            <ion-label>{{device.devicename}}</ion-label>
+            <ion-label>{{device.name}}</ion-label>
           </ion-col>
           <ion-col pull="0.5">
             <ion-label>{{device.ownername}}</ion-label>

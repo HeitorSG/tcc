@@ -21,27 +21,22 @@ export class Tab4Page implements OnInit {
   clayer:any;
   circle:any;
   circlegeo:any;
-  arrayteste = [{
-    devicename:'device1',
-    ownername:'heitor',
-    
-  },
-  {
-    devicename:'device2',
-    ownername:'heitor',
-  },
-  {
-    devicename:'device3',
-    ownername:'heitor',
-  },
-  {
-    devicename:'device4',
-    ownername:'heitor',
-  }
-];
+  devices:[];
   constructor(private storage:LocalStorageService, private socket:SocketioService) { }
 
   ngOnInit() {
+    this.storage.get('user').subscribe( (data) => {
+      console.log(data.id);
+      this.socket.getDevices(data.id); 
+    });
+    this.socket.checkDevice().subscribe({
+      next:(res) => {
+        if(res != 0){
+          this.devices = res;
+          console.log(this.devices);
+        }
+      }
+    });
     this.map = new ol.Map({
       target:'map',
       layers: [
@@ -76,8 +71,8 @@ export class Tab4Page implements OnInit {
   }
 
   addMarker(){
-    this.storage.getMap('user');
-    this.socket.checkMap();  
+    //this.storage.get('user');
+    //this.socket.check();  
     this.marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([-49.75374415,-21.6756695])))
     this.layers.getSource().addFeature(this.marker);
 
