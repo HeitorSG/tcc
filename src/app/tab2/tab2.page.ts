@@ -15,10 +15,10 @@ export class Tab2Page implements OnInit{
   constructor(public activatedRoute: ActivatedRoute, private storage:LocalStorageService, private router:Router) {}
   
   ngOnInit(){
+    console.log(window.history.state);
     if(window.history.state.navigationId == 2){
       this.param = window.history.state;
       this.storage.set('user',this.param);
-    
     }
 
   }

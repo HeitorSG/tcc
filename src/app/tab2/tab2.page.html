@@ -6,21 +6,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <body>
+<ion-content [fullscreen]="true" color="light" style="overflow-y: auto;">
     <div class="container">
             </div> 
 
             <div class="bs-calltoaction bs-calltoaction-primary">
                 <div class="row">
                     <div class="col-md-9 cta-contents">
-                        <h1 class="cta-title">Realizar uma chamada de Vídeo</h1>
+                        <h1 class="cta-title" style="">Realizar uma chamada de Vídeo</h1>
                         <div class="cta-desc">
                             <p>Inicie uma conversa de audio e vídeo com um de seus aparelhos cadastrados</p>
                         </div>
                     </div>
                     <div class="col-md-3 cta-button">
-                        <a (click)="goTo('tabs/tab5')" class="btn btn-lg btn-block btn-primary">Realizar Chamada</a>
+                        <a (click)="goTo('tab5')" class="btn btn-lg btn-block btn-primary">Realizar Chamada</a>
                     </div>
                  </div>
             </div>
@@ -28,13 +27,13 @@
             <div class="bs-calltoaction bs-calltoaction-info">
                 <div class="row">
                     <div class="col-md-9 cta-contents">
-                        <h1 class="cta-title">Chamada de Audio</h1>
+                        <h1 class="cta-title">Aparelhos</h1>
                         <div class="cta-desc">
-                            <p>Inicie uma conversa de audio com um de seus aparelhos cadastrados</p>
+                            <p>Lista de aparelhos cadastrados</p>
                         </div>
                     </div>
                     <div class="col-md-3 cta-button">
-                        <a href="#" class="btn btn-lg btn-block btn-info">Realizar Chamada</a>
+                        <a (click)="goTo('tab6')" class="btn btn-lg btn-block btn-info">Checar Aparelhos</a>
                     </div>
                  </div>
             </div>
@@ -48,7 +47,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 cta-button">
-                        <a (click)="goTo('tabs/tab4')" class="btn btn-lg btn-block btn-success">Localização GPS</a>
+                        <a (click)="goTo('tab4')" class="btn btn-lg btn-block btn-success">Localização GPS</a>
                     </div>
                  </div>
             </div>
@@ -62,11 +61,10 @@
                         </div>
                     </div>
                     <div class="col-md-3 cta-button">
-                        <a (click)="goTo('tabs/tab1')" class="btn btn-lg btn-block btn-warning">Sair</a>
+                        <a (click)="goTo('tab1')" class="btn btn-lg btn-block btn-warning">Sair</a>
                     </div>
                  </div>
             </div>
 
-    
-</body>
+
 </ion-content>

@@ -11,22 +11,19 @@ export class SocketioService {
 
   constructor(private socket:Socket) { }
 
-  setupSocketConnection(){
-
-    this.socket.on('', socket =>{
-      alert("Username / Password Invalid, Please try again!");
+  setupSocketConnection() {
+    this.socket.on('connection', socket =>{
+      console.log(socket.id);
     });
-
-  
   }
 
-  checkCad(router){
+  checkCad(router) {
     this.socket.on('created', () => {
       router.navigate(['tab1']);
     })
   }
   
-  checkDevice():Observable<any>{
+  checkDevice():Observable<any> {
     const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
     this.socket.on('device_return', (data) =>{
       console.log(data);
@@ -35,21 +32,38 @@ export class SocketioService {
     });
     return result.asObservable();
   }
+  
+  checkDeviceMap():Observable<any> {
+    const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
+    this.socket.on('device_return_map', (data) =>{
+      console.log(data);
+      result.next(data);
+      result.complete();
+    });
+    return result.asObservable();
+  }
 
-  getDevices(OwnerID){
-    this.socket.emit('get_devices',{
-      ownerid: OwnerID
+  getDevices(OwnerID) {
+    this.socket.emit('get_devices', {
+      OwnerID: OwnerID
     });
   }
 
-  mapInit(data){
+  deleteDevice(deviceName, OwnerID) {
+    this.socket.emit('delete_device', {
+      Name:deviceName,
+      OwnerID:OwnerID
+    });
+  }
+
+  mapInit(data) {
     console.log(data);
     this.socket.emit('map_connection',{
       id: data.id,
     });
   }
 
-  checkLogin(router){
+  checkLogin(router) {
     this.socket.on('valid', (data)=> {
       router.navigate(['tab2'],{state:{
         id:data.id,
@@ -67,7 +81,7 @@ export class SocketioService {
 
   }
 
-  cadastrarDevice(Name, Ownername, Ownerid){
+  cadastrarDevice(Name, Ownername, Ownerid) {
     this.socket.emit('cadastro_device',
     {
       Name:Name,
@@ -76,7 +90,7 @@ export class SocketioService {
     });
   }
 
-  cadastrarUser(Name, Email, Password, Tel, CPF){
+  cadastrarUser(Name, Email, Password, Tel, CPF) {
     this.socket.emit('cadastro_user',{
       Name:Name,
       Email:Email,
@@ -86,10 +100,18 @@ export class SocketioService {
     })
   }
 
-  loginSocket(Email, Password){
+  loginSocket(Email, Password) {
     this.socket.emit('login_user',{
       email:Email,
       password:Password
     });
+  }
+
+  sendCoords(deviceName, OwnerID, coords) {
+    this.socket.emit('send_coords',{
+      Name: deviceName,	
+      OwnerID: OwnerID,
+      coords: coords
+    })
   }
 }

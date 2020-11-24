@@ -61,7 +61,7 @@ export class Tab6Page implements OnInit {
     await alert.present();
   }
 
-  async presentActionSheet() {
+  async presentActionSheet(deviceName) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Device',
       cssClass: 'my-custom-class',
@@ -72,7 +72,10 @@ export class Tab6Page implements OnInit {
         role: 'destructive',
         icon: 'trash',
         handler: () => {
-          console.log('Delete clicked');
+          this.storage.get('user').subscribe((data) => {
+            console.log(data.id);
+            this.socket.deleteDevice(deviceName, data.id);
+          });
         }
       }, {
         text: 'Edit',

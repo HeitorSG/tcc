@@ -22,15 +22,16 @@ export class Tab5Page implements OnInit,AfterViewInit {
    }
 
    ngAfterViewInit(){
+    //gets the html element of both the camera and microphone buttons
     this.aview.nativeElement.innerHTML = this.icona;
     this.myview.nativeElement.innerHTML = this.icon;
-    console.log("this view:", this.myview.nativeElement.innerHTML);
+   
    }
 
   ngOnInit() {
+    //creeate your strem and joins a channel(the first argument passed to the join function is the token of the channel you are joining)
     this.client = this.ngxAgoraService.createClient({mode:'rtc', codec:'h264'});
     this.assignClientHandler();
-
     this.localStream = this.ngxAgoraService.createStream({streamID: this.uid, audio:true, video:true, screen: false});
     this.assignLocalStreamHandlers();
     this.initLocalStream(() => this.join(uid => this.publish(), error => console.error(error)));
@@ -41,10 +42,12 @@ export class Tab5Page implements OnInit,AfterViewInit {
   }
 
   publish(){
+    //publish your stream to agora servers making it available to others in that channel
     this.client.publish(this.localStream, err => console.log('publish local stream error:', err));
   }
 
   private assignLocalStreamHandlers(){
+    //listeners for you local stream handles mainly the camera and microphone permissions
     this.localStream.on(StreamEvent.MediaAccessAllowed, () => {
       console.log('access allowed');
     });
@@ -56,6 +59,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
   }
 
   private initLocalStream(onSuccess?: () => any){
+    //create the local streams displaying the video and the audio
     this.localStream.init(
       () => {
         this.localStream.play(this.localCallId,{fit:'contain'});
@@ -68,6 +72,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
   }
 
   private assignClientHandler(){
+    //listeners for the events coming from the clients connected to the same room
     this.client.on(ClientEvent.LocalStreamPublished, evt => {
       console.log('publish local stream successfully');
     });
@@ -120,10 +125,12 @@ export class Tab5Page implements OnInit,AfterViewInit {
   }
 
   private getRemoteId(stream: Stream): string {
+  //get the agora id of the respective stream
     return `agora_remote-${stream.getId()}`;
   }
 
   private ctrlVideo(){
+    //controls your camera turning on or off the video(linked with a html button with a camera icon)
     if(this.myview.nativeElement.innerHTML.indexOf('videoon') != -1){
       this.myview.nativeElement.innerHTML = "<div style='height:50px; width:50px;'><ion-icon name='videocam-off-outline' id='videooff' style='height:100%; width:100%;color:#17a2b8;'></ion-icon></div>"
       this.localStream.muteVideo();
@@ -132,12 +139,11 @@ export class Tab5Page implements OnInit,AfterViewInit {
       this.myview.nativeElement.innerHTML = "<div style='height:50px; width:50px;'><ion-icon name='videocam-outline' id='videoon' style='height:100%; width:100%;color:#17a2b8;'></ion-icon></div>"
       this.localStream.unmuteVideo();
     }
-   // var html = document.getElementById('vctrl').innerHTML;
-    //html = "<div id='vctrl' (click)='playVideo()' class='videocontrol'><ion-icon name='videocam-off-outline' style='height:100%; width:100%;'></ion-icon></div>";
     
   }
 
   private ctrlAudio(){
+    //controls your microphone turning on or off the audio(linked with a html button with a microphone icon)
     if(this.aview.nativeElement.innerHTML.indexOf('audioon') != -1){
       this.aview.nativeElement.innerHTML = "<div style='height:50px; width:50px;'><ion-icon name='mic-off-outline' id='audiooff' style='height:100%; width:100%;color:#17a2b8;'></ion-icon></div>";
       this.localStream.muteAudio();

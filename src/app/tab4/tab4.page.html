@@ -35,7 +35,7 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="tcc">
+            <ion-button color="tcc" (click)="markerControl(device.name, device.coordinates); circleControl(device.name)">
               <ion-icon name="call-outline" slot="icon-only"></ion-icon>
             </ion-button>
           </ion-col>
