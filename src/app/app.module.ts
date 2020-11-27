@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
 import {SocketIoModule,SocketIoConfig} from 'ngx-socket-io';
 
 
-const socketconfig: SocketIoConfig = {url:'http://localhost:3000', options:{ rememberUpgrade:true,
+const socketconfig: SocketIoConfig = {url:'https://tccserver.loca.lt', options:{ rememberUpgrade:true,
 transports: ['websocket'],
 secure:true, 
 rejectUnauthorized: false}}
