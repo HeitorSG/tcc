@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent} from 'ngx-agora';
+import { LocalStorageService } from '../local-storage.service';
 import { inject } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab5',
@@ -17,7 +19,7 @@ export class Tab5Page implements OnInit,AfterViewInit {
   private client: AgoraClient;
   private localStream: Stream;
   private uid:number;
-  constructor(private ngxAgoraService:NgxAgoraService) {
+  constructor(private ngxAgoraService:NgxAgoraService, private storage: LocalStorageService, private router:Router) {
     this.uid = Math.floor(Math.random() * 100);
    }
 
@@ -29,7 +31,13 @@ export class Tab5Page implements OnInit,AfterViewInit {
    }
 
   ngOnInit() {
-    //creeate your strem and joins a channel(the first argument passed to the join function is the token of the channel you are joining)
+    this.storage.get('user').subscribe( (data) => {
+      if(data == undefined){
+        this.router.navigate(['tab1'])
+      }
+      console.log(data.id);
+    });
+    //creeate your stream and joins a channel(the first argument passed to the join function is the token of the channel you are joining)
     this.client = this.ngxAgoraService.createClient({mode:'rtc', codec:'h264'});
     this.assignClientHandler();
     this.localStream = this.ngxAgoraService.createStream({streamID: this.uid, audio:true, video:true, screen: false});
@@ -38,7 +46,10 @@ export class Tab5Page implements OnInit,AfterViewInit {
   }
 
   join(onSuccess?: (uid:number | string) => void, onFailure?: (error:Error) => void){
-    this.client.join('006af7cf4e1dc8e4c1597497b3bbcead4c0IAA0vMAcKrRyejVzvKY29YrXFttWjCyXBUQ2e9D4NQx/bOnZLEwAAAAAEABJgS3VfralXwEAAQCAtqVf','foo-bar', this.uid, onSuccess, onFailure);
+    
+      this.client.join('006af7cf4e1dc8e4c1597497b3bbcead4c0IABFodbOKY/RXkYFxoRHduklwGxVRYXOql9PKCOlM7frIunZLEwAAAAAEAAWal0mGNLCXwEAAQAZ0sJf','foo-bar', this.uid, onSuccess, onFailure);
+    
+   
   }
 
   publish(){

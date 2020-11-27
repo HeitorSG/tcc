@@ -25,24 +25,14 @@ export class Tab1Page implements OnInit{
 
   constructor(private http:HttpClient,private router:Router, private socketService:SocketioService, private storage:LocalStorageService) {}
 
-  async ngOnInit(){
-    console.log('inicio');
-    var user ={
-      email: 'teste',
-      password: 'storage'
-    }
-    var user2;
-    var teste;
-    this.storage.set('user', user);
-    user2 = this.storage.get('user');
-    user2.subscribe({
-      next:(res) => {
-        if(res != 0){
-          return res;
-        }
-      }
+  ngOnInit(){
+    
+    this.storage.get('user').subscribe((data) => {
+      this.Username = data.email;
+      this.Password = data.password;
+      this.Login();
     });
-  };
+  }
 
   printUser(){
     console.log();

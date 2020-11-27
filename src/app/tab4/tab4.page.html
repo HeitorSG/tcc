@@ -35,7 +35,7 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="tcc" (click)="markerControl(device.name, device.coordinates); circleControl(device.name)">
+            <ion-button color="tcc" (click)="markerControl(device.name, device.coordinates); circleControl(device.name, device.coordinates)">
               <ion-icon name="call-outline" slot="icon-only"></ion-icon>
             </ion-button>
           </ion-col>
@@ -45,7 +45,8 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-icon name="ellipse" color="danger"></ion-icon>
+            <div #teste id="{{device.id}}">
+            <ion-icon name="ellipse" color="danger"></ion-icon></div>
           </ion-col>
         </ion-item>
   </ion-list>

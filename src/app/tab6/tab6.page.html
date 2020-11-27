@@ -15,8 +15,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid size="5" >
-    <ion-list *ngFor="let device of devices">
+  <ion-grid size="5">
+    <ion-list *ngFor="let device of devices" #teste>
         <ion-item lines="full">
           <ion-col >
             <ion-icon name="hardware-chip-outline"></ion-icon>
@@ -43,7 +43,8 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-icon name="ellipse" color="danger"></ion-icon>
+            <div #teste id="{{device.id}}"> 
+            <ion-icon  name="ellipse" color="danger" ></ion-icon></div>
           </ion-col>
         </ion-item>
   </ion-list>

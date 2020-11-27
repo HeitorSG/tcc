@@ -3,17 +3,32 @@ import {Socket} from 'ngx-socket-io';
 import { GlobalConstants } from 'src/common/global-constants';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { ActionSheetController, mdTransitionAnimation, AlertController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketioService {
 
-  constructor(private socket:Socket) { }
+  constructor(private socket:Socket, private alertController:AlertController) { }
 
   setupSocketConnection() {
-    this.socket.on('connection', socket =>{
-      console.log(socket.id);
+    this.socket.on('connected', (data) =>{
+      this.socket.removeAllListeners();
+      console.log('chegou', data);
+    });
+
+    this.socket.on('disconnect', () => {
+      this.socket.removeAllListeners();
+    });
+  }
+
+ 
+
+  pingDevice(deviceName, OwnerID, where){
+    this.socket.emit(where, {
+      deviceName: deviceName,
+      OwnerID: OwnerID
     });
   }
 
@@ -33,15 +48,7 @@ export class SocketioService {
     return result.asObservable();
   }
   
-  checkDeviceMap():Observable<any> {
-    const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
-    this.socket.on('device_return_map', (data) =>{
-      console.log(data);
-      result.next(data);
-      result.complete();
-    });
-    return result.asObservable();
-  }
+
 
   getDevices(OwnerID) {
     this.socket.emit('get_devices', {
@@ -72,11 +79,14 @@ export class SocketioService {
         password:data.password
       }
       });
+      this.socket.removeListener('valid');
     });
     
-    this.socket.on('invalid', socket => {
+    this.socket.on('invalid', (data) => {
+      this.socket.removeListener('invalid');
       console.log("conta errada");
-      window.alert('Wrong Email or Password!');
+      this.presentAlert();
+      
     });
 
   }
@@ -113,5 +123,17 @@ export class SocketioService {
       OwnerID: OwnerID,
       coords: coords
     })
+  }
+
+  getSocket(){
+    return this.socket;
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass:'customAlert',
+      header:'Alert!!! Wrong Email or Password',
+    });
+    await alert.present();
   }
 }
