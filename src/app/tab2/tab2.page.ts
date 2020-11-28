@@ -24,7 +24,6 @@ export class Tab2Page implements OnInit{
       if(data == undefined){
         this.router.navigate(['tab1'])
       }
-      console.log(data.id);
     });
 
   }
