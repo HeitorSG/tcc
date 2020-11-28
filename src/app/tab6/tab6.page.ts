@@ -21,22 +21,21 @@ export class Tab6Page implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
       this.storage.get('user').subscribe( (data) => {
-        if(data == undefined){
-          this.router.navigate(['tab1'])
-        }
         console.log(data.id);
-        this.socket.getDevices(data.id); 
-      
-      this.socket.checkDevice().subscribe({
-        next:(res) => {
-          if(res != 0) {
-            this.devices = res
-            //console.log(this.devices);
-            //this.pingDevice('teste3');
-          }
+        if(data != undefined){
+          this.socket.getDevices(data.id); 
         }
-      });
+        else{
+          this.router.navigate['tab1'];
+        }
+        
+        const socketteste = this.socket.getSocket();
+        socketteste.on('device_return', (data) =>{
+          console.log(data);
+          this.devices = data;
+        });
     });
 
     const socketteste = this.socket.getSocket();
@@ -75,6 +74,10 @@ export class Tab6Page implements OnInit, AfterViewInit {
     
       
    
+  }
+
+  goTo(url){
+    this.router.navigate([url]);
   }
 
   async presentAlert() {

@@ -14,7 +14,7 @@ export class SocketioService {
 
   setupSocketConnection() {
     this.socket.on('connected', (data) =>{
-      this.socket.removeAllListeners();
+      //this.socket.removeAllListeners();
       console.log('chegou', data);
     });
 
@@ -38,15 +38,6 @@ export class SocketioService {
     })
   }
   
-  checkDevice():Observable<any> {
-    const result: BehaviorSubject<any> = new BehaviorSubject<any>(0);
-    this.socket.on('device_return', (data) =>{
-      console.log(data);
-      result.next(data);
-      result.complete();
-    });
-    return result.asObservable();
-  }
   
 
 

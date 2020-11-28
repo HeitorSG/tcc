@@ -31,24 +31,34 @@ export class Tab4Page implements OnInit {
   ngOnInit() {
     
     //init the map first layer
-    this.storage.get('user').subscribe( (data) => {
-      if(data == undefined){
-        this.router.navigate(['tab1'])
-      }
+    this.storage.get('user').subscribe((data) => {
+
       console.log(data.id);
-      this.socket.getDevices(data.id); 
+      if(data != undefined){
+        this.socket.getDevices(data.id); 
+      }
+      else{
+        this.router.navigate['tab1'];
+      }
+      
     });
 
-    this.socket.checkDevice().subscribe({
+
+    /*this.socket.checkDevice().subscribe({
       next:(res) => {
         if(res != 0){
           this.devices = res;
           console.log(this.devices);
         }
       }
-    });
+    });*/
 
     const socketteste = this.socket.getSocket();
+    socketteste.on('device_return', (data) =>{
+      console.log(data);
+      this.devices = data;
+    });
+
     socketteste.on('ping_return_true', (data) => {
       console.log(data);
       this.myview.toArray().map(x => {
@@ -142,6 +152,10 @@ export class Tab4Page implements OnInit {
     
     
     
+  }
+
+  goTo(url){
+    this.router.navigate([url]);
   }
 
   markerUpdate(deviceName){

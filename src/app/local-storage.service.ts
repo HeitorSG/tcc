@@ -11,7 +11,7 @@ export class LocalStorageService {
 
   set(index, data){
     this.storage.set(index, data).subscribe(() => {
-
+      
     });
   }
 

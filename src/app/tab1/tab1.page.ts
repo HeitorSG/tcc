@@ -26,12 +26,12 @@ export class Tab1Page implements OnInit{
   constructor(private http:HttpClient,private router:Router, private socketService:SocketioService, private storage:LocalStorageService) {}
 
   ngOnInit(){
-    
+  
     this.storage.get('user').subscribe((data) => {
       this.Username = data.email;
       this.Password = data.password;
       this.Login();
-    });
+    });  
   }
 
   printUser(){
