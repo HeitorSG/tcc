@@ -31,14 +31,15 @@ export class Tab6Page implements OnInit, AfterViewInit {
           this.router.navigate['tab1'];
         }
         
-        const socketteste = this.socket.getSocket();
-        socketteste.on('device_return', (data) =>{
-          console.log(data);
-          this.devices = data;
-        });
+      
     });
 
     const socketteste = this.socket.getSocket();
+    socketteste.on('device_return', (data) =>{
+      console.log(data);
+      this.devices = data;
+    });
+
     socketteste.on('ping_return_true', (data) => {
       console.log(data);
       this.myview.toArray().map(x => {
@@ -67,7 +68,7 @@ export class Tab6Page implements OnInit, AfterViewInit {
     setInterval(() => {
       console.log("passou");
       this.devices.forEach(async (device:any) => {
-      this.pingDevice(device.name); 
+      this.pingDevice(device.name, 'ping_device'); 
       //console.log(device);
     })},2500);
    
@@ -152,9 +153,9 @@ export class Tab6Page implements OnInit, AfterViewInit {
 
   }
 
-  pingDevice(deviceName) {
+  pingDevice(deviceName, where) {
     this.storage.get('user').subscribe((data) => {
-      this.socket.pingDevice(deviceName, data.id, 'ping_device)');
+      this.socket.pingDevice(deviceName, data.id, where);
     });
 
   }
