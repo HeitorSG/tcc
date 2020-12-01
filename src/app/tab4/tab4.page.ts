@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { NetworkPluginWeb } from '@capacitor/core';
+import { AlertController } from '@ionic/angular';
 import {LocalStorageService} from '../local-storage.service';
 import { SocketioService } from '../socketio.service';
 
@@ -26,7 +27,10 @@ export class Tab4Page implements OnInit {
   circle:any;
   circlegeo:any;
   devices:any[];
-  constructor(private storage:LocalStorageService, private socket:SocketioService, private router:Router) { }
+  activeCircles:any[];
+  
+  constructor(private storage:LocalStorageService, private socket:SocketioService, private router:Router, private alertController:AlertController) { 
+  }
 
   ngOnInit() {
     
@@ -85,6 +89,7 @@ export class Tab4Page implements OnInit {
       console.log("passou");
       this.devices.forEach(async (device:any) => {
       this.pingDevice(device.name, 'ping_device'); 
+      
       //console.log(device);
     })},2500);
 
@@ -158,8 +163,26 @@ export class Tab4Page implements OnInit {
     this.router.navigate([url]);
   }
 
-  markerUpdate(deviceName){
+  async markerUpdate(deviceName){
+
     const socketRealtime = this.socket.getSocket();
+    var alert = await this.alertController.create({
+      cssClass:'customAlert',
+      header:'Add Device',
+      inputs:[{
+        name:'DeviceName',
+        type:'text',
+        placeholder:'Device Name'
+      }],
+      buttons:[
+        {
+          text:'okay',
+          handler:(data) => {
+           setTimeout(() => {window.location.reload();},300);
+          }
+        }
+      ]
+    });
    
       socketRealtime.on('device_return_map', (data) =>{
         if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') != undefined){
@@ -180,6 +203,19 @@ export class Tab4Page implements OnInit {
         this.map.addLayer(this.mlayer);
         this.mlayer.getSource().addFeature(this.marker);
         this.map.getView().setCenter(ol.proj.fromLonLat(data.coordinates));
+        if(this.activeCircles != undefined){
+          this.activeCircles.forEach(async(circle) => {
+            if(circle.N.name == data.name && circle.intersectsCoordinate(ol.proj.fromLonLat(data.coordinates)) == true){
+              console.log("dentro do circulo");
+            }
+            else if( circle.N.name == data.name && circle.intersectsCoordinate(ol.proj.fromLonLat(data.coordinates)) == false && alert != undefined){
+              
+              await alert.present().then(() =>{
+                alert = undefined;
+              });
+            }
+          })
+        }
       }
       
       });
@@ -203,6 +239,14 @@ export class Tab4Page implements OnInit {
       });
       this.map.addLayer(this.clayer);
       this.circle = new ol.geom.Circle(ol.proj.fromLonLat(coords), 40);
+      this.circle.set("name", deviceName);
+      if(this.activeCircles != undefined){
+        this.activeCircles.push(this.circle);
+      }
+      else if(this.activeCircles == undefined) {
+        this.activeCircles = [this.circle];
+      }
+      
       console.log(this.circle.getCenter());
       this.circleVector.addFeature(new ol.Feature(this.circle));
       console.log(this.circle.intersectsCoordinate(ol.proj.fromLonLat(coords)));
