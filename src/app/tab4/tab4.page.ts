@@ -163,26 +163,10 @@ export class Tab4Page implements OnInit {
     this.router.navigate([url]);
   }
 
-  async markerUpdate(deviceName){
+  markerUpdate(deviceName){
 
     const socketRealtime = this.socket.getSocket();
-    var alert = await this.alertController.create({
-      cssClass:'customAlert',
-      header:'Add Device',
-      inputs:[{
-        name:'DeviceName',
-        type:'text',
-        placeholder:'Device Name'
-      }],
-      buttons:[
-        {
-          text:'okay',
-          handler:(data) => {
-           setTimeout(() => {window.location.reload();},300);
-          }
-        }
-      ]
-    });
+    var alert 
    
       socketRealtime.on('device_return_map', (data) =>{
         if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') != undefined){
@@ -209,7 +193,23 @@ export class Tab4Page implements OnInit {
               console.log("dentro do circulo");
             }
             else if( circle.N.name == data.name && circle.intersectsCoordinate(ol.proj.fromLonLat(data.coordinates)) == false && alert != undefined){
-              
+              alert = await this.alertController.create({
+                cssClass:'customAlert',
+                header:'Add Device',
+                inputs:[{
+                  name:'DeviceName',
+                  type:'text',
+                  placeholder:'Device Name'
+                }],
+                buttons:[
+                  {
+                    text:'okay',
+                    handler:(data) => {
+                     setTimeout(() => {window.location.reload();},300);
+                    }
+                  }
+                ]
+              });
               await alert.present().then(() =>{
                 alert = undefined;
               });
