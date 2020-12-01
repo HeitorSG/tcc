@@ -67,10 +67,13 @@ export class Tab6Page implements OnInit, AfterViewInit {
 
     setInterval(() => {
       console.log("passou");
+      if(this.devices != undefined){
       this.devices.forEach(async (device:any) => {
       this.pingDevice(device.name, 'ping_device'); 
       //console.log(device);
-    })},2500);
+      })
+    }
+  },2500);
    
     
       
@@ -126,6 +129,7 @@ export class Tab6Page implements OnInit, AfterViewInit {
           this.storage.get('user').subscribe((data) => {
             console.log(data.id);
             this.socket.deleteDevice(deviceName, data.id);
+            setTimeout(() => {window.location.reload();},300);
           });
         }
       }, {
