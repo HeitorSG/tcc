@@ -16,7 +16,7 @@ export class Tab2Page implements OnInit{
   
   ngOnInit(){
     console.log(window.history.state);
-    if(window.history.state.navigationId == 2){
+    if(window.history.state.id != undefined){
       this.param = window.history.state;
       this.storage.set('user',this.param);
     }

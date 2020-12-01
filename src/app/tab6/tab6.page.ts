@@ -22,6 +22,7 @@ export class Tab6Page implements OnInit, AfterViewInit {
 
   ngOnInit() {
     
+      
       this.storage.get('user').subscribe( (data) => {
         console.log(data.id);
         if(data != undefined){
@@ -30,8 +31,6 @@ export class Tab6Page implements OnInit, AfterViewInit {
         else{
           this.router.navigate['tab1'];
         }
-        
-      
     });
 
     const socketteste = this.socket.getSocket();
