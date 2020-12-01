@@ -187,7 +187,7 @@ export class Tab4Page implements OnInit {
         this.map.addLayer(this.mlayer);
         this.mlayer.getSource().addFeature(this.marker);
         this.map.getView().setCenter(ol.proj.fromLonLat(data.coordinates));
-        if(this.activeCircles != undefined){
+        /*if(this.activeCircles != undefined){
           this.activeCircles.forEach(async(circle) => {
             if(circle.N.name == data.name && circle.intersectsCoordinate(ol.proj.fromLonLat(data.coordinates)) == true){
               console.log("dentro do circulo");
@@ -215,7 +215,7 @@ export class Tab4Page implements OnInit {
               });
             }
           })
-        }
+        }*/
       }
       
       });
