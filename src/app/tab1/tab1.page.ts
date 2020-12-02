@@ -27,14 +27,14 @@ export class Tab1Page implements OnInit{
 
   ngOnInit(){
   
-    this.storage.get('user').subscribe((data) => {
+    /*this.storage.get('user').subscribe((data) => {
       if(data.email && data.password != undefined){
         this.Username = data.email;
         this.Password = data.password;
         this.Login();
       }
      
-    });  
+    });  */
   }
 
   printUser(){

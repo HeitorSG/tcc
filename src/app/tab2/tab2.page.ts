@@ -33,7 +33,6 @@ export class Tab2Page implements OnInit{
   }
 
   logout(){
-    this.storage.delete('user')
     this.router.navigate(['tab1']);
   }
 }
