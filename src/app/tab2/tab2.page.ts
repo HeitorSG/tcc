@@ -31,4 +31,9 @@ export class Tab2Page implements OnInit{
   goTo(url){
     this.router.navigate([url]);
   }
+
+  logout(){
+    this.storage.delete('user');
+    this.router.navigate['tab1'];
+  }
 }
