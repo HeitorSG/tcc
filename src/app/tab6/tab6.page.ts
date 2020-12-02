@@ -25,12 +25,8 @@ export class Tab6Page implements OnInit, AfterViewInit {
       
       this.storage.get('user').subscribe( (data) => {
         console.log(data.id);
-        if(data != undefined){
-          this.socket.getDevices(data.id); 
-        }
-        else{
-          this.router.navigate['tab1'];
-        }
+        console.log(data.id);
+        this.socket.getDevices(data.id); 
     });
 
     const socketteste = this.socket.getSocket();

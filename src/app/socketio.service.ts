@@ -19,7 +19,7 @@ export class SocketioService {
     });
 
     this.socket.on('disconnect', () => {
-      this.socket.removeAllListeners();
+      //this.socket.removeAllListeners();
     });
   }
 

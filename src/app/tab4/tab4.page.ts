@@ -38,12 +38,8 @@ export class Tab4Page implements OnInit {
     this.storage.get('user').subscribe((data) => {
 
       console.log(data.id);
-      if(data != undefined){
-        this.socket.getDevices(data.id); 
-      }
-      else{
-        this.router.navigate['tab1'];
-      }
+      this.socket.getDevices(data.id); 
+      
       
     });
 
@@ -169,7 +165,7 @@ export class Tab4Page implements OnInit {
     const socketRealtime = this.socket.getSocket();
     var alert 
    
-     
+     if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == undefined){window.location.reload();}
         if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker').length > 0){
           this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker').forEach(layer => this.map.removeLayer(layer));
           //create marker layer and attach it to the map
@@ -227,6 +223,7 @@ export class Tab4Page implements OnInit {
   }
 
   circleControl(deviceName, coords) {
+    if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == undefined){window.location.reload();}
     if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'circle').length > 0) {
       //check if theres a circle with the matching deviceName already on the map, removing that circle if true
       this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'circle').forEach(layer => this.map.removeLayer(layer));
