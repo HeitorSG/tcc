@@ -239,7 +239,7 @@ export class Tab4Page implements OnInit {
         source: this.circleVector
       });
       this.map.addLayer(this.clayer);
-      this.circle = new ol.geom.Circle(ol.proj.fromLonLat([-49.75374415,-21.6756695]), 40);
+      this.circle = new ol.geom.Circle(ol.proj.fromLonLat(coords), 40);
       this.circle.set("name", deviceName);
       if(this.activeCircles != undefined){
         this.activeCircles.push(this.circle);
