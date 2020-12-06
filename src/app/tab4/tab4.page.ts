@@ -60,12 +60,13 @@ export class Tab4Page implements OnInit {
     });
 
     socketteste.on('ping_return_true', (data) => {
+      this.markerUpdate(data.name, data.coordinates);
       console.log(data);
       this.myview.toArray().map(x => {
         if(x.nativeElement != undefined) {
           if(x.nativeElement.id == data.id) {
             x.nativeElement.innerHTML = "<ion-icon  name='ellipse' color='primary' ></ion-icon>";
-            this.markerUpdate(data.name, data.coordinates);
+            
           }
         }
       });
@@ -119,6 +120,8 @@ export class Tab4Page implements OnInit {
     socketRealtime.on('ping_return_true_map', (data) => {
       console.log(data);
       if(data.name == deviceName) {
+        console.log(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker'));
+        if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == null){window.location.reload();}
         if(this.map.getLayers().getArray().filter(layer => layer.get('name') === data.name+ 'marker').length > 0) {
           //check if theres a marker assoaciateed with the deviceName already on the map, removing that marker if true
           this.map.getLayers().getArray().filter(layer => layer.get('name') === data.name + 'marker').forEach(layer => this.map.removeLayer(layer));
@@ -143,6 +146,7 @@ export class Tab4Page implements OnInit {
           this.map.getView().setCenter(ol.proj.fromLonLat(coords));
           
         }
+        this.circleControl(data.name, data.coordinates);
         //this.markerUpdate(deviceName);  
         socketRealtime.removeListener('ping_return_true_map');
       }
@@ -165,7 +169,7 @@ export class Tab4Page implements OnInit {
     const socketRealtime = this.socket.getSocket();
     var alert 
    
-     if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == undefined){window.location.reload();}
+     if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == null){window.location.reload();}
         if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker').length > 0){
           this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker').forEach(layer => this.map.removeLayer(layer));
           //create marker layer and attach it to the map
@@ -184,20 +188,19 @@ export class Tab4Page implements OnInit {
         this.map.addLayer(this.mlayer);
         this.mlayer.getSource().addFeature(this.marker);
         this.map.getView().setCenter(ol.proj.fromLonLat(coords));
+        console.log(this.activeCircles);
         if(this.activeCircles != undefined){
           this.activeCircles.forEach(async(circle) => {
-            if(circle.N.name == deviceName && circle.intersectsCoordinate(ol.proj.fromLonLat(deviceName)) == true){
+            if(circle.N != undefined){
+            if(circle.N.name == deviceName && circle.intersectsCoordinate(ol.proj.fromLonLat(coords)) == true){
               console.log("dentro do circulo");
             }
-            else if( circle.N.name == deviceName && circle.intersectsCoordinate(ol.proj.fromLonLat(deviceName)) == false && alert != undefined){
+            else if( circle.N.name == deviceName && circle.intersectsCoordinate(ol.proj.fromLonLat(coords)) == false){
+              console.log("fora do circulo");
+              circle.N = undefined;
               this.alert = await this.alertController.create({
                 cssClass:'customAlert',
-                header:'Add Device',
-                inputs:[{
-                  name:'DeviceName',
-                  type:'text',
-                  placeholder:'Device Name'
-                }],
+                header:'Fora do Circulo',
                 buttons:[
                   {
                     text:'okay',
@@ -207,10 +210,10 @@ export class Tab4Page implements OnInit {
                   }
                 ]
               });
-              await this.alert.present().then(() =>{
-                
-              });
+              await this.alert.present();
+              
             }
+          }
           })
         }
       }
@@ -223,7 +226,7 @@ export class Tab4Page implements OnInit {
   }
 
   circleControl(deviceName, coords) {
-    if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == undefined){window.location.reload();}
+    if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'marker') == null){window.location.reload();}
     if(this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'circle').length > 0) {
       //check if theres a circle with the matching deviceName already on the map, removing that circle if true
       this.map.getLayers().getArray().filter(layer => layer.get('name') === deviceName + 'circle').forEach(layer => this.map.removeLayer(layer));
@@ -236,7 +239,7 @@ export class Tab4Page implements OnInit {
         source: this.circleVector
       });
       this.map.addLayer(this.clayer);
-      this.circle = new ol.geom.Circle(ol.proj.fromLonLat(coords), 40);
+      this.circle = new ol.geom.Circle(ol.proj.fromLonLat([-49.75374415,-21.6756695]), 40);
       this.circle.set("name", deviceName);
       if(this.activeCircles != undefined){
         this.activeCircles.push(this.circle);
